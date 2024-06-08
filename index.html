@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootcamp Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* background-color: #003285; */
+            background-image: url("wallpipir.jpg");
+            background-size: cover;
+        }
+        .container {
+            /* background-color: #03AED2; */
+            background: rgba( 255, 255, 255, 0.25 );
+box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+backdrop-filter: blur( 4px );
+-webkit-backdrop-filter: blur( 4px );
+border-radius: 10px;
+border: 1px solid rgba( 255, 255, 255, 0.18 );
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 600px;
+            height: 428px;
+            max-width: 500px;
+        }
+
+        .container h1 {
+            margin-bottom: 20px;
+            margin-top: -5px;
+            color: ghostwhite;
+            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .container label {
+            display: block;
+            margin: 10px 0 5px;
+            color: #FFD700;
+            font-weight: bold;
+        }
+        .container input[type="text"],
+        .container input[type="number"],
+        .container input[type="email"],
+        .container select {
+            width: 475px;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        .container button {
+            margin-left:  126px;
+            margin-bottom: -10px;
+            padding: 10px 90px;
+            background-color: #FFD700;
+            color: black;
+            font-weight: bold;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+        }
+        .container button:hover {
+            background-color: #373A40;
+            color: white;
+        }
+
+        .student-list {
+            /* background-color: #03AED2; */
+            background: rgba( 255, 255, 255, 0.25 );
+box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+backdrop-filter: blur( 4px );
+-webkit-backdrop-filter: blur( 4px );
+border-radius: 10px;
+border: 1px solid rgba( 255, 255, 255, 0.18 );
+            padding: 20px;
+            margin-top: 20px;
+            margin-bottom: 0px;
+            border-radius: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            height: 400px;
+            max-width: 500px;
+        }
+
+        .student-list button{
+            margin-left:  130px;
+            margin-top: 10px;
+            margin-bottom: -10px;
+            padding: 10px 95px;
+            background-color: #FFD700;
+            color: black;
+            font-weight: bold;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+        }
+
+        .student-list button:hover{
+            background-color: #373A40;
+            color: white;
+        }
+        .student-list h2 {
+            margin-top: -5px;
+            margin-bottom: 20px;
+            color: ghostwhite;
+            font-size: xx-large;
+            text-align: center;
+        }
+        .student-list table {
+            width: 100%;
+            border-collapse: collapse;
+
+        }
+        .student-list table, .student-list th, .student-list td {
+            border: 2px solid ghostwhite;
+            color: ghostwhite;
+        }
+
+        .student-list th{
+            color: #FFD700;
+        }
+        .student-list th, .student-list td {
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Programming and UI/UX Design Bootcamp</h1>
+        <form id="registrationForm">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="course">Role:</label>
+            <select id="course" name="course" required>
+                <option value="Programmer">Programmer</option>
+                <option value="UI/UX Designer">UI/UX Designer</option>
+                
+            </select>
+
+            <button type="submit">Register</button>
+        </form>
+    </div>
+
+    <div class="student-list">
+        <h2>Registered Persons</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                </tr>
+            </thead>
+            <tbody id="studentTableBody">
+                <!-- Student rows will be added here -->
+            </tbody>
+        </table>
+
+        <button onclick="Pambura()">
+            Delete
+        </button>
+    </div>
+        
+    
+    <script>
+        document.getElementById('registrationForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form submission
+
+            // Get form values
+            const name = document.getElementById('name').value;
+            const age = document.getElementById('age').value;
+            const email = document.getElementById('email').value;
+            const course = document.getElementById('course').value;
+
+            // Create student object
+            const student = {
+                name: name,
+                age: age,
+                email: email,
+                course: course
+            };
+
+            // Get existing students from localStorage
+            let students = localStorage.getItem('students');
+            if (students) {
+                students = JSON.parse(students);
+            } else {
+                students = [];
+            }
+
+            // Add new student to the array
+            students.push(student);
+
+            // Save updated students array back to localStorage
+            localStorage.setItem('students', JSON.stringify(students));
+
+            // Clear the form
+            document.getElementById('registrationForm').reset();
+
+            // Update the student list display
+            displayStudents();
+
+            alert('Successfully Registered To The Bootcamp!');
+        });
+            // Delete table row
+            function Pambura() {
+            document.getElementsByTagName("tr")[1].remove();
+        }
+
+        function displayStudents() {
+            const studentTableBody = document.getElementById('studentTableBody');
+            studentTableBody.innerHTML = '';
+
+            // Get students from localStorage
+            const students = JSON.parse(localStorage.getItem('students')) || [];
+
+            // Display each student in the table
+            students.forEach((student, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${student.name}</td>
+                    <td>${student.age}</td>
+                    <td>${student.email}</td>
+                    <td>${student.course}</td>
+                `;
+                studentTableBody.appendChild(row);
+            });
+
+            // localStorage.removeItem("students");
+
+            window.deleteTask = (index) => {
+        tasks.splice(index, 1);
+
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+        
+        renderTasks();
+    };
+        }
+
+        // Display students on page load
+        displayStudents();
+    </script>
+</body>
+</html>
